@@ -4,11 +4,11 @@ Class Project for CS6242, Fall 2019
 
 ## Team Members / Role
 - Austin Wright
-- YOUR NAME HERE
+- Chitwan Kaudan
 
 
 ### Python Version
-3.7
+3.6
 
 ###Dependencies
 
