@@ -2,17 +2,13 @@
 
 Class Project for CS6242, Fall 2019
 
-## Team Members / Role
+## Team Members
+
 - Austin Wright
 - Chitwan Kaudan
 
+# TODO
 
-### Python Version
-3.6
-
-###Dependencies
-
-#TODO
 1. Get Data
 2. Clean Data
 3. Exploratory /Replication Analysis
