@@ -4,7 +4,7 @@ Class Project for CS6242, Fall 2019
 
 ## Team Members
 
-- Austin Wright
+- [Austin Wright](austinpwright.com)
 - Chitwan Kaudan
 
 # TODO
