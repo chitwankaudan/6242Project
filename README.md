@@ -7,6 +7,7 @@ Class Project for CS6242, Fall 2019
 - [Austin Wright](https://www.austinpwright.com)
 - Chitwan Kaudan
 - Austin Himschoot
+- Frank Whitesell
 
 # TODO
 
