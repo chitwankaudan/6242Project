@@ -1,4 +1,4 @@
-,Country,LandLocked,Year,origin_abb,origin_numeric,destination_numeric,destination_abb
+,Country,LandLocked,year,src_abb,src_num,tgt_num,tgt_abb
 0,Afghanistan,1,1900,AFG,4,4,AFG
 1,Afghanistan,1,1901,AFG,4,4,AFG
 2,Afghanistan,1,1902,AFG,4,4,AFG

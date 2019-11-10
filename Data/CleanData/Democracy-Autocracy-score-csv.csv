@@ -1,4 +1,4 @@
-Src country code,Src country Abb,Tgt Country code,Tgt country Abb,year,democ,autoc
+src_num,src_abb,tgt_num,tgt_abb,year,democ,autoc
 840,USA,840,USA,1800,7,3
 840,USA,840,USA,1801,7,3
 840,USA,840,USA,1802,7,3

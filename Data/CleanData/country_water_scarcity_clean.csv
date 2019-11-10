@@ -1,4 +1,4 @@
-,Rank ,Country,Risk_Level,Year,Extremely-high,High,Low,Low-medium,Medium-high,origin_abb,origin_numeric,destination_numeric,destination_abb
+,Rank ,Country,Risk_Level,year,Extremely-high,High,Low,Low-medium,Medium-high,src_abb,src_num,tgt_num,tgt_abb
 0,1,Qatar,Extremely-high,1900,1,0,0,0,0,QAT,634,634,QAT
 1,1,Qatar,Extremely-high,1901,1,0,0,0,0,QAT,634,634,QAT
 2,1,Qatar,Extremely-high,1902,1,0,0,0,0,QAT,634,634,QAT

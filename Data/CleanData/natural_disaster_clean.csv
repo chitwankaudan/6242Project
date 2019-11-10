@@ -1,4 +1,4 @@
-,Country,Prone_Disasters,snow,tsunami,tornado,avalanche,fire,severe_storms,mudslide,icestorms,tropical_storms,Year,origin_abb,origin_numeric,destination_numeric,destination_abb
+,Country,Prone_Disasters,snow,tsunami,tornado,avalanche,fire,severe_storms,mudslide,icestorms,tropical_storms,year,src_abb,src_num,tgt_num,tgt_abb
 0,Afghanistan,"earthquakes,flooding,droughts",0,0,0,0,0,0,0,0,0,1900,AFG,4,4,AFG
 1,Afghanistan,"earthquakes,flooding,droughts",0,0,0,0,0,0,0,0,0,1901,AFG,4,4,AFG
 2,Afghanistan,"earthquakes,flooding,droughts",0,0,0,0,0,0,0,0,0,1902,AFG,4,4,AFG

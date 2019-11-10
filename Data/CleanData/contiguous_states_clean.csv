@@ -1,4 +1,4 @@
-"origin_abb","origin_num","dest_abb","dest_num","year","conttype"
+"src_abb","src_num","tgt_abb","tgt_num","year","conttype"
 NA,NA,"ABW",533,NA,NA
 "CHN",156,"AFG",4,1920,1
 "CHN",156,"AFG",4,1921,1

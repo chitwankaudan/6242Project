@@ -1,4 +1,4 @@
-"origin_abb","origin_num","dest_abb","dest_num","year","GDP_per_cap"
+"src_abb","src_num","tgt_abb","tgt_num","year","GDP_per_cap"
 "ABW",533,"ABW",533,1960,NA
 "ABW",533,"ABW",533,1961,NA
 "ABW",533,"ABW",533,1962,NA

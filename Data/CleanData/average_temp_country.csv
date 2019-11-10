@@ -1,4 +1,4 @@
-,Year,avg,Name,origin_abb,origin_numeric,destination_numeric,destination_abb
+,year,avg,Name,src_abb,src_num,tgt_num,tgt_abb
 0,1961,8.533333333333333,Antigua and Barbuda,ATG,28,28,ATG
 1,1962,6.864166666666666,Antigua and Barbuda,ATG,28,28,ATG
 2,1963,6.654166666666666,Antigua and Barbuda,ATG,28,28,ATG
