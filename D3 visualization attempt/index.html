@@ -28,7 +28,7 @@
   </head>
   <body>
     <select id="selectDropdown_country"></select>
-    <select id="selectDropdown_year"></select>
+    <!--<select id="selectDropdown_year"></select> Hiding the year dropdown for now-->
     <script>
 
       // Configuration parameters.
@@ -53,6 +53,13 @@
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
           ribbonsG = g.append("g"),
           groupsG = g.append("g");
+
+      svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 30)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "25px") 
+        .text("Human Migration Visualization");
 
       // D3 layouts, shapes and scales.
       var ribbon = d3.ribbon()
@@ -95,6 +102,7 @@
             })
             .style("opacity", opacity)
             .on("mouseenter", function(d){
+
               var src = matrix.names[d.source.index];
               var dest = matrix.names[d.target.index];
               popoverOptions.content = [
@@ -107,8 +115,34 @@
               $(this).popover("show");
             })
             .on("mouseleave", function (d){
+
               $(this).popover("hide");
-            })
+            });    
+
+        // Select a migration flow and return src and trg countries
+        ribbonsG.selectAll("path")
+          .on("click", function(d){
+
+                console.log("you clicked on a flow!")
+                console.log("selected src:", d.source.index)
+                console.log("selected tgt:", d.target.index)
+
+              g.selectAll(".ribbon")
+                .filter(function(ribbon) {
+                  return (
+                    (ribbon.source.index !== d.source.index ||
+                    ribbon.target.index !== d.target.index)
+                  );
+                })
+              .transition().duration(transitionDuration)
+                .style("opacity", fadedOpacity);
+              })
+          .on("dblclick", function (){
+        
+            g.selectAll(".ribbon")
+              .transition().duration(transitionDuration)
+                .style("opacity", opacity);
+          });
 
         // Scaffold the chord groups.
         var groups = groupsG
@@ -133,6 +167,7 @@
         // Render the chord group labels.
         var angle = d3.local(),
             flip = d3.local();
+        
         groups
           .append("text")
             .each(function(d) {
@@ -163,7 +198,8 @@
       // Used for both the arcs and the text labels.
       function groupHover(selection){
         selection
-          .on("mouseover", function (group){
+          .on("click", function (group){
+            console.log(group.index)
             g.selectAll(".ribbon")
                 .filter(function(ribbon) {
                   return (
@@ -174,7 +210,8 @@
               .transition().duration(transitionDuration)
                 .style("opacity", fadedOpacity);
           })
-          .on("mouseout", function (){
+          .on("dblclick", function (){
+        
             g.selectAll(".ribbon")
               .transition().duration(transitionDuration)
                 .style("opacity", opacity);
@@ -219,6 +256,8 @@
 
         return matrix;
       }
+
+      // Initial values for country and year drop downs
       selected_year = 2010;
       selected_country = "World";
 
@@ -236,6 +275,8 @@
         var year_list = [1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978,
          1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
          2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
+        
+        // Country drop down
         var countryselector = d3.select("#selectDropdown_country")
 	          .selectAll("options")
 	          .data(country_list)
@@ -244,6 +285,7 @@
 	          .text(function (d) { return d; })
 	          .attr("value", function (d) { return d;})
 
+        // Year drop down
         var yearselector = d3.select("#selectDropdown_year")
 	          .selectAll("options")
 	          .data(year_list)
@@ -251,135 +293,52 @@
 	          .append("option")
 	          .text(function (d) { return d; })
 	          .attr("value", function (d) { return d;})
+        
+        // Load initial data
         initial_data = dataForCountries.filter(function(d){
           if( d["year0"] == selected_year){return d;}
         })
 
         render(initial_data.slice(0,100))
-
+        
         function update(year, country){
-        console.log(+year)
-        console.log(country)
-        var selected_year = +year;
-        var selected_country = country
+          console.log(+year)
+          console.log(country)
+          var selected_year = +year;
+          var selected_country = country
+          
+          svg.selectAll("g")
+              .remove()
+          g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+          ribbonsG = g.append("g"),
+          groupsG = g.append("g");
 
-        svg.selectAll("g")
-            .remove()
-        g = svg.append("g")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
-        ribbonsG = g.append("g"),
-        groupsG = g.append("g");
 
-        function render(data){
+          if (country == "World"){
+              var filtered_data = dataForCountries.filter(function(d){
+                if( d["year0"] == year){return d;}})}
 
-          var matrix = generateMatrix(data),
-              chords = chord(matrix);
+          else {
+              var filtered_data = dataForCountries.filter(function(d){
+                if ( (d["year0"] == year) && ((d["orig"] == country) || (d["dest"] == country)) && (d["total_flow"] != 0) ) {return d;}})
+              }
 
-          color.domain(matrix.map(function (d, i){
-            return i;
-          }));
-
-          // Render the ribbons.
-          ribbonsG.selectAll("path")
-              .data(chords)
-            .enter().append("path")
-              .attr("class", "ribbon")
-              .attr("d", ribbon)
-              .style("fill", function(d) {
-                return color(d.source.index);
-              })
-              .style("stroke", function(d) {
-                return d3.rgb(color(d.source.index)).darker();
-              })
-              .style("opacity", opacity)
-              .on("mouseenter", function(d){
-                var src = matrix.names[d.source.index];
-                var dest = matrix.names[d.target.index];
-                popoverOptions.content = [
-                  "<strong>" + src +" to " + dest +"</strong>",
-                  valueFormat(d.target.value),
-                  "<br><strong>" + dest +" to " + src +"</strong>",
-                  valueFormat(d.source.value)
-                ].join("<br>");
-                $(this).popover(popoverOptions);
-                $(this).popover("show");
-              })
-              .on("mouseleave", function (d){
-                $(this).popover("hide");
-              })
-
-          // Scaffold the chord groups.
-          var groups = groupsG
-            .selectAll("g")
-              .data(chords.groups)
-            .enter().append("g");
-
-          // Render the chord group arcs.
-          groups
-            .append("path")
-              .attr("class", "arc")
-              .attr("d", arc)
-              .style("fill", function(group) {
-                return color(group.index);
-              })
-              .style("stroke", function(group) {
-                return d3.rgb(color(group.index)).darker();
-              })
-              .style("opacity", opacity)
-              .call(groupHover);
-
-          // Render the chord group labels.
-          var angle = d3.local(),
-              flip = d3.local();
-          groups
-            .append("text")
-              .each(function(d) {
-                angle.set(this, (d.startAngle + d.endAngle) / 2)
-                flip.set(this, angle.get(this) > Math.PI);
-              })
-              .attr("transform", function(d) {
-                return [
-                  "rotate(" + (angle.get(this) / Math.PI * 180 - 90) + ")",
-                  "translate(" + (outerRadius + labelPadding) + ")",
-                  flip.get(this) ? "rotate(180)" : ""
-                ].join("");
-              })
-              .attr("text-anchor", function(d) {
-                return flip.get(this) ? "end" : "start";
-              })
-              .text(function(d) {
-                return matrix.names[d.index];
-              })
-              .attr("alignment-baseline", "central")
-              .style("font-family", '"Helvetica Neue", Helvetica')
-              .style("font-size", "10pt")
-              .style("cursor", "default")
-              .call(groupHover);
-        }
-        if (country == "World"){
-            var filtered_data = dataForCountries.filter(function(d){
-              if( d["year0"] == year){return d;}})}
-
-        else {
-            var filtered_data = dataForCountries.filter(function(d){
-              if ( (d["year0"] == year) && ((d["orig"] == country) || (d["dest"] == country)) && (d["total_flow"] != 0) ) {return d;}})
-
-            }
-
-        render(filtered_data.slice(0,100))
+          render(filtered_data.slice(0,100))
         };
 
         d3.select("#selectDropdown_country").on("change", function(d) {
         var change = d3.select(this).property("value")
         var selected_country = change
         update(selected_year, selected_country)  })
-
+        
         d3.select("#selectDropdown_year").on("change", function(d) {
         var change = d3.select(this).property("value")
         var selected_year = change
         update(selected_year, selected_country)  })
-
+        
       })
+
       // Parses a single row of the input table.
       function type(d){
         d.flow = +d.flow;
