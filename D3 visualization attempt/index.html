@@ -199,7 +199,6 @@
       function groupHover(selection){
         selection
           .on("click", function (group){
-            console.log(group.index)
             g.selectAll(".ribbon")
                 .filter(function(ribbon) {
                   return (
@@ -302,8 +301,8 @@
         render(initial_data.slice(0,100))
         
         function update(year, country){
-          console.log(+year)
-          console.log(country)
+          //console.log(+year)
+          //console.log(country)
           var selected_year = +year;
           var selected_country = country
           
