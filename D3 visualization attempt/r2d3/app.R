@@ -145,30 +145,49 @@ ui <- fluidPage(theme = shinytheme("spacelab"),
    sidebarLayout(
       sidebarPanel(
         h3("Instructions:"),
-        p("Select the year you would like to visualize first. On the corresponding chord diagram select one country from the base as a source and one as a target. Another country selection will render the diagram in its orginal state."),
-         numericInput("year",
+        h5("1. Select the year you would like to visualize."),
+        h5("2. First on the corresponding chord diagram select one country from the base as a source. Then select another country as a target."),
+        h5("3. A valid selection will render a waterfall chart below the chord diagram."),
+        h5("4. Each column, ordered by magnitude, represents the contribution of a variable to this flows prediction."),
+        h5("5. Another country selection will render the diagram in its orginal state."),
+        br(),
+        numericInput("year",
                      "Please select the year you would like to visualize (1960 to 2014, inclusive):",
                      min = min(master_table$year),
                      max = max(master_table$year),
                      step = 1, 
-                     value = 1970),
+                     value = character(0)),
         h3("Selected Countries:"),
         textOutput("no_selection"),
         tags$head(tags$style("#no_selection{color: black;
-                             font-size: 18px;
+                             font-size: 16px;
                              }"
                          )
         ),
         textOutput("source"),
         tags$head(tags$style("#source{color: black;
-                             font-size: 16px;
+                             font-size: 14px;
                              }"
                          )
         ),
         br(),
         textOutput("target"),
         tags$head(tags$style("#target{color: black;
-                             font-size: 16px;
+                             font-size: 14px;
+                             }"
+                         )
+        ),
+        br(),
+        textOutput("actual_value"),
+        tags$head(tags$style("#actual_value{color: black;
+                             font-size: 14px;
+                             }"
+                         )
+        ),
+        br(),
+        textOutput("pred_value"),
+        tags$head(tags$style("#pred_value{color: black;
+                             font-size: 14px;
                              }"
                          )
         ),
@@ -213,19 +232,27 @@ server <- function(input, output) {
       shinyjs::hide("waterfallPlot")
       shinyjs::hide("source")
       shinyjs::hide("target")
+      shinyjs::hide("pred_value")
+      shinyjs::hide("actual_value")
     }
   })
   
   observeEvent(input$source_target, {
     output$source <- renderText(paste("Source: ", Countries[input$source_target[1]]))
     output$target <- renderText(paste("Target: ", Countries[input$source_target[2]]))
+    output$pred_value <- renderText(paste("Predicted value: ", round(subset(master_table, year == input$year & src_abb == input$source_target[1] & tgt_abb == input$source_target[2])$flow_prediction, 2), " migrants"))
+    output$actual_value <- renderText(paste("Actual value: ", round(subset(master_table, year == input$year & src_abb == input$source_target[1] & tgt_abb == input$source_target[2])$flow, 2), " migrants"))
+    shinyjs::hide("no_selection")
     shinyjs::hide("no_selection")
     shinyjs::show("source")
     shinyjs::show("target")
+    shinyjs::show("pred_value")
+    shinyjs::show("actual_value")
     data <- subset(master_table, year == input$year)
     if(dim(data)[1] != 0) {
       data <- subset(data, src_abb == input$source_target[1])
       data <- subset(data, tgt_abb == input$source_target[2])
+      data <- data[1,]
       if(dim(data)[1] != 0){
         values <- data[45:82]
         labels <- names(values)
@@ -238,7 +265,7 @@ server <- function(input, output) {
         y <- c(data[1,83], y)
         y <- c(y, sum(y))
         x <- labels
-        x <- c("bias_factor", x, "Total")
+        x <- c("Intercept", x, "Predicted Flow Estimate")
         datap <- data.frame(x=factor(x,levels=x),y)
         ax <- list(
           title = "Individual Source and Target Factors",
@@ -252,11 +279,10 @@ server <- function(input, output) {
                      increasing = list(marker = list(color = "teal")),
                      totals = list(marker = list(color = "maroon")),
                      text = paste("Variable: ", x,
-                                  "<br>Log Value: ", round(y, 2),
-                                  "<br>Actual Predicted Value: ", round(exp(y), 2)),
+                                  "<br>Log Value: ", round(y, 2)),
                      hoverinfo = 'text') %>%
           layout(title = "Waterfall Chart for Log Predicted Values", xaxis = ax, yaxis = list(title = "Log of Prediction Factor Values"),
-                 autosize = F, width = 800, height = 200)
+                 autosize = F, width = 800, height = 400)
         output$waterfallPlot <- renderPlotly({
           p
         })
@@ -275,6 +301,8 @@ server <- function(input, output) {
     shinyjs::show("no_selection")
     shinyjs::hide("source")
     shinyjs::hide("target")
+    shinyjs::hide("pred_value")
+    shinyjs::hide("actual_value")
     shinyjs::hide("waterfallPlot")
   })
 
