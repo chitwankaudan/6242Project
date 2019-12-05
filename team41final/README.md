@@ -5,7 +5,7 @@ In recent years, it has been speculated that climate change is beginning to have
 
 This package also includes our complete analysis and visualization tool under the CODE folder. If you would like a quick demo of our visualization tool without running any code, navigate to the quick demo section. If you would like to train the model and build the visualization tool from scratch, navigate to the full installation seciton.
 
-# Quick Demo
+# Demo Execution
 For your convenience, we have published a subset of our results from 2005-2014 (inclusive) [here.](https://migration-flow-visualization.shinyapps.io/6242_visualization/)
 
 # Full Installation
@@ -17,29 +17,27 @@ For your convenience, we have published a subset of our results from 2005-2014 (
 
 1. Download all datasets from this [folder](https://github.com/APWright/6242Project/tree/master/Data/CleanData) into your Data/ directory
 
-2. Unzip all files
-
-3. Navigate to the CODE/ directory and run the following command in your terminal to create the climate environment
+2. Navigate to the CODE/ directory and run the following command in your terminal to create the climate environment
 ```
 conda env create -f environment.yml
 ```
-4. Activate climate environment
+3. Activate climate environment
 ```
 conda activate climate
 ```
-5. Navigate to the Analysis/ directory. Launch jupyter notebook using the following command.
+4. Navigate to the Analysis/ directory. Launch jupyter notebook using the following command.
 ```
 jupyter notebook
 ```
-6. Open and run Estimating Migration.ipynb. This notebook will save your trained model in Model/ and the final output estimates as master_table.csv in InteractiveViz/
+5. Open and run Estimating Migration.ipynb. This notebook will save your trained model in Model/ and the final output estimates as master_table.csv in InteractiveViz/
 
 
 ### Build the visualization
-7. Make sure there is an unzipped master_table.csv file in your InteractiveViz/ directory and that you have created the climate environment from steps 2-3 above. From the terminal where you have climate activated, launch rstudio.
+6. Make sure there is an unzipped master_table.csv file in your InteractiveViz/ directory and that you have created the climate environment from steps 2-3 above. From the terminal where you have climate activated, launch rstudio.
 ```
 rstudio
 ```
-8. Navigate to File>Open Project and open InteractiveViz.Rproj project. Then open the app.R file.
-9. Click on the RunApp button to launch the visualization
+7. Navigate to File>Open Project and open InteractiveViz.Rproj project. Then open the app.R file.
+8. Click on the RunApp button to launch the visualization
 
 *Note: It may take a few minutes to load the dataset when you first launch the app.*
