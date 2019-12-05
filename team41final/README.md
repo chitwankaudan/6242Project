@@ -1,4 +1,4 @@
-# Estimating Impact of Climate Change on Human Migration
+# Quantifying the Causes of Human Migration
 
 # Description
 In recent years, it has been speculated that climate change is beginning to have an impact of human migration. To study the effect of climate change on migration, we use a General Additive Model (GAM) to model the human migration using traditional variables such as trade and climate variables such as average temperatures. This package includes our results in the final report and poster in the DOC folder. 
@@ -13,7 +13,7 @@ For your convenience, we have published a subset of our results from 2005-2014 (
 - Anaconda or miniconda
 
 ### Train the model
-*Note: Depending on your machine, training the model may require you to purchase additional memory resources. We have provided a sample trained master_table.csv incase you are unable to train the GAM or would like to jump straight to visualization.*
+*Note: Depending on your machine, training the model may require you to purchase additional memory resources. We have provided a sample trained master_table.csv in case you are unable to train the GAM or would like to jump straight to visualization.*
 
 1. Download all datasets from this [folder](https://github.com/APWright/6242Project/tree/master/Data/CleanData) into your Data/ directory
 
