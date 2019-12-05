@@ -19,7 +19,7 @@ For your convenience, we have published a subset of our results from 2005-2014 (
 
 2. Unzip any files all files
 
-3. Navigate to the 6242Project/ directory and run the following command in your terminal to create the climate environment
+3. Navigate to the CODE/ directory and run the following command in your terminal to create the climate environment
 ```
 conda env create -f environment.yml
 ```
