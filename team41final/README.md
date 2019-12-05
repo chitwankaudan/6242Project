@@ -17,7 +17,7 @@ For your convenience, we have published a subset of our results from 2005-2014 (
 
 1. Download all datasets from this [folder](https://github.com/APWright/6242Project/tree/master/Data/CleanData) into your Data/ directory
 
-2. Unzip any files all files
+2. Unzip all files
 
 3. Navigate to the CODE/ directory and run the following command in your terminal to create the climate environment
 ```
@@ -41,4 +41,5 @@ rstudio
 ```
 8. Navigate to File>Open Project and open InteractiveViz.Rproj project. Then open the app.R file.
 9. Click on the RunApp button to launch the visualization
+
 *Note: It may take a few minutes to load the dataset when you first launch the app.*
